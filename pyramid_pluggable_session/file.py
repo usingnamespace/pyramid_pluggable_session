@@ -56,7 +56,7 @@ required_settings = [
 def FileSessionPlug(config):
     for _require in required_settings:
         if _require not in config.registry.settings:
-            raise RuntimeError('pluggable_session.file.path needs to be set.')
+            raise RuntimeError(_require + ' needs to be set.')
 
     path = config.registry.settings['pluggable_session.file.path']
     path = os.path.abspath(path)
