@@ -52,7 +52,7 @@ testing_extras = tests_require + [
     ]
 
 setup(name='pyramid_pluggable_session',
-      version='0.0.0dev',
+      version='0.0.0a1',
       description='A pluggable session implementation for Pyramid',
       long_description=README + '\n\n' +  CHANGES,
       classifiers=[

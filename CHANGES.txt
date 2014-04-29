@@ -1,0 +1,15 @@
+0.0.0a1
+=======
+
+New features:
+
+- A file based session storage now exists.
+
+- A chain can now be constructed for session storage
+
+0.0.0dev
+========
+
+- A new ISession compliant Pyramid session provider appears.
+
+- A single backend exists, it is based on local Pyramid memory.
