@@ -357,7 +357,7 @@ def set_session_plug(config, dotted):
     """
 
     dotted = config.maybe_dotted(dotted)
-    config.registry.registerUtility(dotted(), IPlugSession)
+    config.registry.registerUtility(dotted(config), IPlugSession)
 
 def includeme(config):
     # We can't continue unless at least this is set...
