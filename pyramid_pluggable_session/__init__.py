@@ -314,7 +314,7 @@ def PluggableSessionFactory(
                     )
 
             self._plug.dumps(self, self.request, sess_val)
-            self._cookie.set_cookies(self.request.response, self._session_id)
+            self._cookie.set_cookies(response, self._session_id)
 
             return True
 
