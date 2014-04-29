@@ -32,6 +32,7 @@ install_requires=[
     'setuptools',
     'pyramid >= 1.5',
     'WebOb >= 1.3.1', # request.domain and CookieProfile
+    'zope.interface',
     ]
 
 tests_require = [
@@ -86,6 +87,6 @@ setup(name='pyramid_pluggable_session',
           },
       tests_require = tests_require,
       test_suite="pyramid_pluggable_session.tests",
-      #entry_points = 
+      #entry_points =
       )
 
