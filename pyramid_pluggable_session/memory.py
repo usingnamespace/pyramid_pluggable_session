@@ -5,28 +5,19 @@ from zope.interface import implementer
 
 from .interfaces import IPlugSession
 
-_memory_storage = {}
+def MemorySessionPlug(config):
+    log.warning("This session plug is not recommended for production.")
+    storage = {}
 
-@implementer(IPlugSession)
-class MemorySessionPlug(object):
-    def __init__(self):
-        for i in xrange(10):
-            log.warning("DO NOT USE THIS IN PRODUCTION SYSTEMS!")
+    @implementer(IPlugSession)
+    class _MemorySessionPlug(object):
+        def loads(self, session, request):
+            return storage.get(session._session_id, None)
 
-    def loads(self, session, request):
-        global _memory_storage
+        def dumps(self, session, request, sess_data):
+            storage[session._session_id] = sess_data
 
-        try:
-            return _memory_storage[session._session_id]
-        except KeyError:
-            return None
-
-    def dumps(self, session, request, sess_data):
-        global _memory_storage
-
-        _memory_storage[session._session_id] = sess_data
+    return _MemorySessionPlug()
 
 def includeme(config):
-    for i in xrange(10):
-        log.warning("DO NOT USE THIS IN PRODUCTION SYSTEMS!")
-    config.registry.registerUtility(MemorySessionPlug(), IPlugSession)
+    config.registry.registerUtility(MemorySessionPlug(config), IPlugSession)
