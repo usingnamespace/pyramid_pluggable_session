@@ -18,4 +18,6 @@ class IPlugSession(Interface):
         any previously stored session data should overwritten. ``session_data``
         is an opaque object, it's contents are a serialised version of the
         session data.
+
+        If ``session_data`` is None, the session may safely be removed.
         """
