@@ -20,5 +20,8 @@ class IPlugSession(Interface):
         version of the session data.
         """
 
-        If ``session_data`` is None, the session may safely be removed.
+    def clear(session, request):
+        """ This function given a ``session`` and a ``request`` should clear
+        the data associated with the ``_session_id`` attribute of the
+        ``session``.
         """
