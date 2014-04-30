@@ -15,9 +15,10 @@ class IPlugSession(Interface):
         """ This function given a ``session`` and ``request`` should using the
         ``_session_id`` attribute of the ``session`` write the session
         information, with the ``session_id`` being used as a unique identifier,
-        any previously stored session data should overwritten. ``session_data``
-        is an opaque object, it's contents are a serialised version of the
-        session data.
+        any previously stored session data should be overwritten.
+        ``session_data`` is an opaque object, it's contents are a serialised
+        version of the session data.
+        """
 
         If ``session_data`` is None, the session may safely be removed.
         """
