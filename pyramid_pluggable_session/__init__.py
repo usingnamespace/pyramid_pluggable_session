@@ -252,6 +252,10 @@ def PluggableSessionFactory(
 
         def invalidate(self):
             self._plug.clear(self, self.request)
+            self._generate_new_id()
+            now = time.time()
+            self.created = self.renewed = now
+            self.new = True
             self.clear()
 
         # non-modifying dictionary methods
