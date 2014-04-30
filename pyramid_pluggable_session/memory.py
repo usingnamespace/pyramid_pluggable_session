@@ -17,6 +17,10 @@ def MemorySessionPlug(config):
         def dumps(self, session, request, sess_data):
             storage[session._session_id] = sess_data
 
+        def clear(self, session, request):
+            if session._session_id in storage:
+                del storage[session._session_id]
+
     return _MemorySessionPlug()
 
 def includeme(config):

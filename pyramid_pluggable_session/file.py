@@ -48,6 +48,15 @@ class _FileSessionPlug(object):
             log.warning('Unable to write new session data to disk...')
             log.exception(e)
 
+    def clear(self, session, request):
+        path = request.registry.settings['pluggable_session.file.path']
+        fpath = os.path.join(path, session._session_id)
+
+        try:
+            os.unlink(fpath)
+        except:
+            pass
+
 
 required_settings = [
         'pluggable_session.file.path',

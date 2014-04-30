@@ -30,6 +30,10 @@ class _ChainSessionPlug(object):
         for plug in self.plugs:
             plug.dumps(session, request, sess_data)
 
+    def clear(self, session, request):
+        for plug in self.plugs:
+            plug.clear(session, request)
+
 
 required_settings = [
         'pluggable_session.chain.plugs',
