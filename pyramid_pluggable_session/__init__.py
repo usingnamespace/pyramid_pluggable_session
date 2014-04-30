@@ -204,6 +204,7 @@ def PluggableSessionFactory(
                     value = None
                     # Cleanup the session, since it failed to deserialize
                     plug.clear(self, request)
+                    self._session_id = None
 
             if value is not None:
                 try:
@@ -218,6 +219,7 @@ def PluggableSessionFactory(
                     state = {}
                     # Clean up the session since it failed to unpack
                     plug.clear(self, request)
+                    self._session_id = None
 
             if self._timeout is not None:
                 if now - renewed > self._timeout:
@@ -226,9 +228,11 @@ def PluggableSessionFactory(
                     state = {}
                     # Session expired, cleanup this session
                     plug.clear(self, request)
+                    self._session_id = None
 
+            # Generate a new session id
             if self._session_id is None:
-                self._session_id = text_(binascii.hexlify(os.urandom(20)))
+                self._generate_new_id()
 
             self.created = created
             self.accessed = renewed
@@ -323,6 +327,9 @@ def PluggableSessionFactory(
             self._cookie.set_cookies(response, self._session_id)
 
             return True
+
+        def _generate_new_id(self):
+            self._session_id = text_(binascii.hexlify(os.urandom(20)))
 
     return PluggableSession
 
