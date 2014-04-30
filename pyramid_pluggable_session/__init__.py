@@ -202,7 +202,8 @@ def PluggableSessionFactory(
                     value = serializer.loads(bytes_(sess_val))
                 except ValueError:
                     value = None
-                    self._session_id = None
+                    # Cleanup the session, since it failed to deserialize
+                    plug.clear(self, request)
 
             if value is not None:
                 try:
@@ -215,12 +216,16 @@ def PluggableSessionFactory(
                     # value failed to unpack properly or renewed was not
                     # a numeric type so we'll fail deserialization here
                     state = {}
+                    # Clean up the session since it failed to unpack
+                    plug.clear(self, request)
 
             if self._timeout is not None:
                 if now - renewed > self._timeout:
                     # expire the session because it was not renewed
                     # before the timeout threshold
                     state = {}
+                    # Session expired, cleanup this session
+                    plug.clear(self, request)
 
             if self._session_id is None:
                 self._session_id = text_(binascii.hexlify(os.urandom(20)))
@@ -242,6 +247,7 @@ def PluggableSessionFactory(
                 self.request.add_response_callback(save_session_callback)
 
         def invalidate(self):
+            self._plug.clear(self, self.request)
             self.clear()
 
         # non-modifying dictionary methods
